@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resumify_mobile/presentation/views/profile_view.dart';
 
 class HomeScreen extends StatefulWidget {
   final int index;
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
 
     //final screens = [const PlantsView(), const CalendarView(), const IdentificationView(), const SpecialistView(), const SettingsView()];
-    final List<Widget> screens = [];
+    final List<Widget> screens = [ProfileView()];
 
     return Scaffold(
       appBar: AppBar(
