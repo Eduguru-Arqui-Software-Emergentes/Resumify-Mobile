@@ -6,7 +6,7 @@ class AuthService{
   static Future<void> signUp(String email, String password, String name, String username) async {
 
     try{
-      var url = Uri.parse('http://localhost:8080/api/v1/autenticacion/signup');
+      var url = Uri.parse('http://10.0.2.2:8080/api/v1/autenticacion/signup');
       Map<String, String> headers = {
         "Accept": "application/json",
         "Content-Type": "application/json"
@@ -39,7 +39,7 @@ class AuthService{
 
   static Future<void> logIn(String username, String password) async {
     try {
-      var url = Uri.parse('http://localhost:8080/api/v1/autenticacion/signin');
+      var url = Uri.parse('http://10.0.2.2:8080/api/v1/autenticacion/signin');
       Map<String, String> headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",

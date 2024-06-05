@@ -10,7 +10,7 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Container (
        child: Scaffold(
         appBar: AppBar(
           title: Text("Pagina principal", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20)),

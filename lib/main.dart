@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       //home: initialScreen,
-      initialRoute: '/home',
+      initialRoute: '/',
       routes: {
         '/': (context) => initialScreen,
         '/splash': (context) => const SplashScreen(),
