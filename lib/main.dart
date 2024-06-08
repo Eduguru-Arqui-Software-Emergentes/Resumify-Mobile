@@ -20,6 +20,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget initialScreen = const AuthScreen();
+
+    /*
     if (storedToken != null) {
       bool isTokenExpired = JwtDecoder.isExpired(storedToken!);
 
@@ -31,6 +33,10 @@ class MyApp extends StatelessWidget {
     } else {
       initialScreen = const AuthScreen();
     }
+
+     */
+
+    initialScreen = const HomeScreen(index: 0);
 
     return MaterialApp(
       title: 'Resumify App',

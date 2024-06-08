@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:resumify_mobile/presentation/views/profile_view.dart';
+import 'package:resumify_mobile/presentation/screens/search_video_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final int index;
@@ -13,77 +13,97 @@ class _HomeScreenState extends State<HomeScreen> {
   final int index;
   _HomeScreenState(this.index);
 
-  int selectedIndex = 0;
+  int _selectedIndex = 0;
 
-  @override
-  void initState(){
-    selectedIndex = index;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-
-    //final screens = [const PlantsView(), const CalendarView(), const IdentificationView(), const SpecialistView(), const SettingsView()];
-    final List<Widget> screens = [ProfileView()];
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Resumify, your assistant", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
-        backgroundColor: Colors.lightBlue,
-        automaticallyImplyLeading: false,),
-      backgroundColor: const Color.fromRGBO(40, 40, 40, 1.0),
-      body: SafeArea(
-        child: IndexedStack(
-            index: selectedIndex,
-            children: screens
-        ),),
+      body: Row(
+        children: <Widget>[
+          Container(
+            //margin: EdgeInsets.all(16.0),
+            child: NavigationRail(
+              backgroundColor: Color.fromRGBO(229, 229, 229, 100),
+              selectedIndex: _selectedIndex,
+              groupAlignment: -1,
+              onDestinationSelected: (int index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              labelType: NavigationRailLabelType.none,
 
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedIndex,
-        onTap: (value){
-          setState(() {
-            selectedIndex = value;
-          });
-        },
-        elevation: 20,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.yard_outlined),
-              activeIcon: Icon(Icons.yard),
-              label: "Plants",
-              backgroundColor: Colors.red
+              trailing:
+              IconButton(
+                onPressed: () {
+                  // Add your onPressed code here!
+                },
+                icon: const Icon(Icons.exit_to_app),
+
+              ),
+
+              destinations: const <NavigationRailDestination>[
+                NavigationRailDestination(
+                  icon: Icon(Icons.account_box_outlined),
+                  selectedIcon: Icon(Icons.account_box_rounded),
+                  label: Text('First'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.translate),
+                  selectedIcon: Icon(Icons.translate_sharp),
+                  label: Text('Second'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.library_books_outlined),
+                  selectedIcon: Icon(Icons.library_books_rounded),
+                  label: Text('Third'),
+                ),
+              ],
+            ),
           ),
 
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month_outlined),
-              activeIcon: Icon(Icons.calendar_month),
-              label: "Calendar",
-              backgroundColor: Colors.green
-          ),
 
-          BottomNavigationBarItem(
-              icon: Icon(Icons.linked_camera_outlined),
-              activeIcon: Icon(Icons.linked_camera),
-              label: "Identify",
-              backgroundColor: Colors.blue
+          Expanded(
+              child: Navigator(
+                onGenerateRoute: (settings) {
+                  return MaterialPageRoute(builder: (context) => _getScreenForIndex(_selectedIndex),
+                  );
+                },
+              )
           ),
-
-          BottomNavigationBarItem(
-              icon: Icon(Icons.psychology_alt_outlined),
-              activeIcon: Icon(Icons.psychology_alt),
-              label: "Specialists",
-              backgroundColor: Colors.orange
-          ),
-
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined),
-              activeIcon: Icon(Icons.settings),
-              label: "Settings",
-              backgroundColor: Colors.yellow
-          )
         ],
       ),
     );
   }
+
+  Widget _getScreenForIndex(int index) {
+    switch (index) {
+      case 0:
+        return TabOne();
+      case 1:
+        return SearchVideo();
+      default:
+        return TabOne();
+    }
+  }
+
 }
+
+
+class TabOne extends StatefulWidget {
+  const TabOne({super.key});
+
+  @override
+  State<TabOne> createState() => _TabOneState();
+}
+
+class _TabOneState extends State<TabOne> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Contenido de la pestaña 1'),
+    );
+  }
+}
+
