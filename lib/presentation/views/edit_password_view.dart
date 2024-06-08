@@ -1,33 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:resumify_mobile/presentation/views/edit_password_view.dart';
+import 'package:resumify_mobile/presentation/views/profile_view.dart';
 
-class ProfileView extends StatefulWidget {
-  const ProfileView({super.key});
+class EditPasswordScreen extends StatefulWidget {
+  const EditPasswordScreen({super.key});
 
   @override
-  State<ProfileView> createState() => _Profile();
+  State<EditPasswordScreen> createState() => _EditPasswordScreen();
 }
 
-class _Profile extends State<ProfileView> {
-  final TextEditingController nombresController = TextEditingController();
-  final TextEditingController apellidosController = TextEditingController();
-  final TextEditingController correoController = TextEditingController();
-  final TextEditingController contactoController = TextEditingController();
-  final TextEditingController contactoAdicionalController = TextEditingController();
+class _EditPasswordScreen extends State<EditPasswordScreen> {
   final TextEditingController contrasenaController = TextEditingController();
+  final TextEditingController nuevacontrasenaController1 = TextEditingController();
+  final TextEditingController nuevacontrasenaController2 = TextEditingController();
 
   bool isEditable = false;
-
-  @override
-  void initState() {
-    super.initState();
-    nombresController.text = "Coliflor";
-    apellidosController.text = "Paredes Purima";
-    correoController.text = "Coliflor.Paredes@gmail.com";
-    contactoController.text = "987654123";
-    contactoAdicionalController.text = "953265412";
-    contrasenaController.text = "********************";
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +28,7 @@ class _Profile extends State<ProfileView> {
             children: [
               const Center(
                 child: Text(
-                  'Mi Perfil',
+                  'Editar Contraseña',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -50,33 +36,27 @@ class _Profile extends State<ProfileView> {
                 ),
               ),
               const SizedBox(height: 10),
-              _buildProfileField(label: 'Nombres', controller: nombresController, isEditable: isEditable),
-              _buildProfileField(label: 'Apellidos', controller: apellidosController, isEditable: isEditable),
-              _buildProfileField(label: 'Correo', controller: correoController, isEditable: isEditable),
-              _buildProfileField(label: 'N°Contacto', controller: contactoController, isEditable: isEditable),
-              _buildProfileField(label: 'N°Contacto Adicional', controller: contactoAdicionalController, isEditable: isEditable),
-              _buildProfileField(label: 'Contraseña', controller: contrasenaController, isPassword: true, isEditable: false),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    isEditable =! isEditable;
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(250, 40),
-                  backgroundColor: const Color.fromRGBO(77, 148, 255, 100),
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  textStyle: const TextStyle(fontSize: 16),
-                ),
-                child: Text(isEditable ? 'Guardar Cambios' : 'Editar Perfil'),
-              ),
+              _buildProfileField(
+                  label: 'Contraseña Antigua',
+                  controller: contrasenaController,
+                  isPassword: true,
+                  isEditable: true),
+              _buildProfileField(
+                  label: 'Contraseña Nueva',
+                  controller: nuevacontrasenaController1,
+                  isPassword: true,
+                  isEditable: true),
+              _buildProfileField(
+                  label: 'Repetir Contraseña Nueva',
+                  controller: nuevacontrasenaController2,
+                  isPassword: true,
+                  isEditable: true),
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const EditPasswordScreen()),
+                    MaterialPageRoute(builder: (context) => const ProfileView()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -85,7 +65,24 @@ class _Profile extends State<ProfileView> {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   textStyle: const TextStyle(fontSize: 16),
                 ),
-                child: const Text('Editar Contraseña'),
+                child: const Text('Cancelar'),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProfileView()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(250, 40),
+                  backgroundColor: const Color.fromRGBO(77, 148, 255, 100),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  textStyle: const TextStyle(fontSize: 16),
+                ),
+                child: const Text('Confirmar'),
               ),
             ],
           ),
@@ -94,12 +91,11 @@ class _Profile extends State<ProfileView> {
     );
   }
 
-
   Widget _buildProfileField(
       {required String label,
-        required TextEditingController controller,
-        bool isPassword = false,
-        required bool isEditable}) {
+      required TextEditingController controller,
+      bool isPassword = false,
+      required bool isEditable}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 5),
       child: Column(
@@ -131,12 +127,9 @@ class _Profile extends State<ProfileView> {
 
   @override
   void dispose() {
-    nombresController.dispose();
-    apellidosController.dispose();
-    correoController.dispose();
-    contactoController.dispose();
-    contactoAdicionalController.dispose();
     contrasenaController.dispose();
+    nuevacontrasenaController1.dispose();
+    nuevacontrasenaController2.dispose();
     super.dispose();
   }
 }

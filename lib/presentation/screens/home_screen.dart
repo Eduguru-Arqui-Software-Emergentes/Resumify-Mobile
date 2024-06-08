@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:resumify_mobile/presentation/views/library_view.dart';
 import 'package:resumify_mobile/presentation/views/profile_view.dart';
+import 'package:resumify_mobile/presentation/views/convert_text_view.dart';
+import 'package:resumify_mobile/presentation/views/search_video_view.dart';
 
 class HomeScreen extends StatefulWidget {
   final int index;
@@ -25,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
 
     //final screens = [const PlantsView(), const CalendarView(), const IdentificationView(), const SpecialistView(), const SettingsView()];
-    final List<Widget> screens = [ProfileView()];
+    final List<Widget> screens = [SearchVideo(), LibraryView(), ProfileView()];
 
     return Scaffold(
       appBar: AppBar(
@@ -49,38 +52,24 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 20,
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.yard_outlined),
-              activeIcon: Icon(Icons.yard),
-              label: "Plants",
-              backgroundColor: Colors.red
-          ),
-
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month_outlined),
-              activeIcon: Icon(Icons.calendar_month),
-              label: "Calendar",
-              backgroundColor: Colors.green
-          ),
-
-          BottomNavigationBarItem(
-              icon: Icon(Icons.linked_camera_outlined),
-              activeIcon: Icon(Icons.linked_camera),
-              label: "Identify",
+              icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home),
+              label: "Home",
               backgroundColor: Colors.blue
           ),
 
           BottomNavigationBarItem(
-              icon: Icon(Icons.psychology_alt_outlined),
-              activeIcon: Icon(Icons.psychology_alt),
-              label: "Specialists",
-              backgroundColor: Colors.orange
+              icon: Icon(Icons.library_books_outlined),
+              activeIcon: Icon(Icons.library_books),
+              label: "Library",
+              backgroundColor: Colors.blue
           ),
 
           BottomNavigationBarItem(
               icon: Icon(Icons.settings_outlined),
               activeIcon: Icon(Icons.settings),
               label: "Settings",
-              backgroundColor: Colors.yellow
+              backgroundColor: Colors.blue
           )
         ],
       ),
