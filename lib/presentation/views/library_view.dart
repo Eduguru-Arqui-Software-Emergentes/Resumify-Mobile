@@ -11,14 +11,14 @@ class VideoToLibrary with ChangeNotifier {
   }
 }
 
-class Library extends StatefulWidget {
-  const Library({super.key});
+class LibraryView extends StatefulWidget {
+  const LibraryView({super.key});
 
   @override
-  State<Library> createState() => _Library();
+  State<LibraryView> createState() => _Library();
 }
 
-class _Library extends State<Library> {
+class _Library extends State<LibraryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

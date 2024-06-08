@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
 
-import 'convert_text_screen.dart';
+import '../views/convert_text_view.dart';
 
 String extractVideoId(String url) {
   RegExp regExp = RegExp(
@@ -120,6 +120,11 @@ class _SearchVideoState extends State<SearchVideo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Transcript your video", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
+        backgroundColor: Colors.lightBlue,
+        automaticallyImplyLeading: true,),
+      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(

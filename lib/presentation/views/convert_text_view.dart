@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'convert_summary_screen.dart';
+import '../views/convert_summary_view.dart';
 
 class ConvertToText extends StatefulWidget {
   final String title;
@@ -16,6 +16,11 @@ class _ConvertToTextState extends State<ConvertToText> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Transcript your video", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
+        backgroundColor: Colors.lightBlue,
+        automaticallyImplyLeading: true),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
