@@ -37,12 +37,19 @@ dependencies:
   cupertino_icons: ^1.0.6
   sliding_switch: 1.1.0
   http: ^1.0.0
+  html: ^0.15.0
+  pdf: ^3.10.8
+  path_provider: ^2.0.5
+  printing: ^5.6.0
+  open_file: ^3.3.2
   shared_preferences: ^2.2.3
   fluttertoast: ^8.2.2
   jwt_decoder: ^2.0.1
   table_calendar: ^3.0.9
   image_picker: ^1.1.1
   url_launcher: ^6.1.11
+
+
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +76,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/OpenSans-Regular.ttf
   #  - assets/images/logo_agripure.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
