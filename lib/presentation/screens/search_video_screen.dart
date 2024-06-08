@@ -67,7 +67,7 @@ class _YouTubeVideoDetailsState extends State<YouTubeVideoDetails> {
       future: _videoDetails,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
@@ -76,12 +76,12 @@ class _YouTubeVideoDetailsState extends State<YouTubeVideoDetails> {
             children: [
               Text(
                 videoDetails['title']!,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Image.network(videoDetails['thumbnailUrl']!),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               if (videoDetails['title'] != 'VIDEO NO ENCONTRADO')
                 ElevatedButton(
                   onPressed: () {
@@ -93,10 +93,10 @@ class _YouTubeVideoDetailsState extends State<YouTubeVideoDetails> {
 
                   },
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(250, 40),
-                    backgroundColor: Color.fromRGBO(77, 148, 255, 100),
+                    minimumSize: const Size(250, 40),
+                    backgroundColor: const Color.fromRGBO(77, 148, 255, 100),
                   ),
-                  child: Text('Convertir a Texto'),
+                  child: const Text('Convertir a Texto'),
                 ),
             ],
           );
@@ -127,20 +127,20 @@ class _SearchVideoState extends State<SearchVideo> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
+                const Text(
                   'Enlace de video de Youtube :            ',
                   style: TextStyle(fontSize: 16),
                   textAlign: TextAlign.start,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextField(
                   controller: _controller,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Pega el enlace aquí',
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
@@ -148,11 +148,11 @@ class _SearchVideoState extends State<SearchVideo> {
                     });
                   },
                   style: ElevatedButton.styleFrom(
-                      minimumSize: Size(250, 40),
-                      backgroundColor: Color.fromRGBO(77, 148, 255, 100)),
-                  child: Text('Buscar video'),
+                      minimumSize: const Size(250, 40),
+                      backgroundColor: const Color.fromRGBO(77, 148, 255, 100)),
+                  child: const Text('Buscar video'),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 if (_videoURL.isNotEmpty)
                   YouTubeVideoDetails(videoUrl: _videoURL),
               ],

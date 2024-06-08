@@ -73,7 +73,7 @@ class _ConvertToSummaryState extends State<ConvertToSummary> {
 
     if (downloadsDir == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('No se pudo obtener el directorio de descargas.'),
           duration: Duration(seconds: 3),
         ),
@@ -93,7 +93,7 @@ class _ConvertToSummaryState extends State<ConvertToSummary> {
 
     if (result.type != ResultType.done) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('No se pudo abrir el archivo PDF.'),
           duration: Duration(seconds: 3),
         ),
@@ -119,47 +119,47 @@ class _ConvertToSummaryState extends State<ConvertToSummary> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Text(
                 '${widget.title}',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Image.network('${widget.thumbnailUrl}'),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Resumen del Video',
                 style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
                 width: 300,
-                padding: EdgeInsets.all(10),
-                color: Color.fromRGBO(229, 229, 229, 100),
+                padding: const EdgeInsets.all(10),
+                color: const Color.fromRGBO(229, 229, 229, 100),
                 child: Text(
                   content,
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _saveAndDownloadPdf,
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(250, 40),
-                  backgroundColor: Color.fromRGBO(77, 148, 255, 100),
+                  minimumSize: const Size(250, 40),
+                  backgroundColor: const Color.fromRGBO(77, 148, 255, 100),
                 ),
-                child: Text('Descargar PDF'),
+                child: const Text('Descargar PDF'),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: _sharePdf,
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(250, 40),
-                  backgroundColor: Color.fromRGBO(77, 148, 255, 100),
+                  minimumSize: const Size(250, 40),
+                  backgroundColor: const Color.fromRGBO(77, 148, 255, 100),
                 ),
-                child: Text('Compartir PDF'),
+                child: const Text('Compartir PDF'),
               ),
             ],
           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:resumify_mobile/presentation/screens/library_screen.dart';
 import 'package:resumify_mobile/presentation/screens/search_video_screen.dart';
+import 'package:resumify_mobile/presentation/screens/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final int index;
@@ -24,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             //margin: EdgeInsets.all(16.0),
             child: NavigationRail(
-              backgroundColor: Color.fromRGBO(229, 229, 229, 100),
+              backgroundColor: const Color.fromRGBO(229, 229, 229, 100),
               selectedIndex: _selectedIndex,
               groupAlignment: -1,
               onDestinationSelected: (int index) {
@@ -80,11 +82,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _getScreenForIndex(int index) {
     switch (index) {
       case 0:
-        return TabOne();
+        return const Profile();
       case 1:
-        return SearchVideo();
+        return const SearchVideo();
+      case 2:
+        return const Library();
       default:
-        return TabOne();
+        return const TabOne();
     }
   }
 
@@ -101,7 +105,7 @@ class TabOne extends StatefulWidget {
 class _TabOneState extends State<TabOne> {
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text('Contenido de la pestaña 1'),
     );
   }

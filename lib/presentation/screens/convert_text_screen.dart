@@ -23,39 +23,39 @@ class _ConvertToTextState extends State<ConvertToText> {
             mainAxisSize: MainAxisSize.min,
             children: [
 
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
 
               Text(
                 '${widget.title}',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               Image.network('${widget.thumbnailUrl}'),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-              Text(
+              const Text(
                 'Conversión del Video',
                 style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               Container(
                 width: 300,
-                padding: EdgeInsets.all(10),
-                color: Color.fromRGBO(229, 229, 229, 100),
-                child:Text(
+                padding: const EdgeInsets.all(10),
+                color: const Color.fromRGBO(229, 229, 229, 100),
+                child: const Text(
                   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               ElevatedButton(
                 onPressed: () {
@@ -66,10 +66,10 @@ class _ConvertToTextState extends State<ConvertToText> {
                     ),);
                 },
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(250, 40),
-                  backgroundColor: Color.fromRGBO(77, 148, 255, 100),
+                  minimumSize: const Size(250, 40),
+                  backgroundColor: const Color.fromRGBO(77, 148, 255, 100),
                 ),
-                child: Text('Resumir'),
+                child: const Text('Resumir'),
               ),
             ],
           ),
