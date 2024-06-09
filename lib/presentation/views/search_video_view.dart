@@ -39,10 +39,13 @@ class YouTubeVideoDetails extends StatefulWidget {
   YouTubeVideoDetails({required this.videoUrl});
 
   @override
-  _YouTubeVideoDetailsState createState() => _YouTubeVideoDetailsState();
+  _YouTubeVideoDetailsState createState() => _YouTubeVideoDetailsState(videoUrl: videoUrl);
 }
 
 class _YouTubeVideoDetailsState extends State<YouTubeVideoDetails> {
+  final String videoUrl;
+  _YouTubeVideoDetailsState({required this.videoUrl});
+
   late Future<Map<String, String>> _videoDetails;
 
   @override
@@ -88,7 +91,7 @@ class _YouTubeVideoDetailsState extends State<YouTubeVideoDetails> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ConvertToText(title: videoDetails['title']!, thumbnailUrl: videoDetails['thumbnailUrl']!),
+                        builder: (context) => ConvertToText(urlVideo: videoUrl, title: videoDetails['title']!, thumbnailUrl: videoDetails['thumbnailUrl']!),
                       ),);
 
                   },
