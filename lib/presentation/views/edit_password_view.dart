@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:resumify_mobile/presentation/screens/profile_screen.dart';
+import 'package:resumify_mobile/presentation/views/profile_view.dart';
 
 class EditPasswordScreen extends StatefulWidget {
   const EditPasswordScreen({super.key});
@@ -56,7 +56,7 @@ class _EditPasswordScreen extends State<EditPasswordScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Profile()),
+                    MaterialPageRoute(builder: (context) => const ProfileView()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -73,7 +73,7 @@ class _EditPasswordScreen extends State<EditPasswordScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const Profile()),
+                        builder: (context) => const ProfileView()),
                   );
                 },
                 style: ElevatedButton.styleFrom(

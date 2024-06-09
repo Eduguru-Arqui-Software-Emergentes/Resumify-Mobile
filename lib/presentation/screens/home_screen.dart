@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:resumify_mobile/presentation/screens/library_screen.dart';
-import 'package:resumify_mobile/presentation/screens/search_video_screen.dart';
-import 'package:resumify_mobile/presentation/screens/profile_screen.dart';
+import 'package:resumify_mobile/presentation/views/library_view.dart';
+import 'package:resumify_mobile/presentation/views/profile_view.dart';
+import 'package:resumify_mobile/presentation/views/convert_text_view.dart';
+import 'package:resumify_mobile/presentation/views/search_video_view.dart';
 
 class HomeScreen extends StatefulWidget {
   final int index;
@@ -15,99 +16,63 @@ class _HomeScreenState extends State<HomeScreen> {
   final int index;
   _HomeScreenState(this.index);
 
-  int _selectedIndex = 0;
+  int selectedIndex = 0;
 
+  @override
+  void initState(){
+    selectedIndex = index;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    //final screens = [const PlantsView(), const CalendarView(), const IdentificationView(), const SpecialistView(), const SettingsView()];
+    final List<Widget> screens = [SearchVideo(), LibraryView(), ProfileView()];
+
     return Scaffold(
-      body: Row(
-        children: <Widget>[
-          Container(
-            //margin: EdgeInsets.all(16.0),
-            child: NavigationRail(
-              backgroundColor: const Color.fromRGBO(229, 229, 229, 100),
-              selectedIndex: _selectedIndex,
-              groupAlignment: -1,
-              onDestinationSelected: (int index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-              labelType: NavigationRailLabelType.none,
+      appBar: AppBar(
+        title: Text("Resumify, your assistant", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
+        backgroundColor: Colors.lightBlue,
+        automaticallyImplyLeading: false,),
+      backgroundColor: const Color.fromRGBO(40, 40, 40, 1.0),
+      body: SafeArea(
+        child: IndexedStack(
+            index: selectedIndex,
+            children: screens
+        ),),
 
-              trailing:
-              IconButton(
-                onPressed: () {
-                  // Add your onPressed code here!
-                },
-                icon: const Icon(Icons.exit_to_app),
-
-              ),
-
-              destinations: const <NavigationRailDestination>[
-                NavigationRailDestination(
-                  icon: Icon(Icons.account_box_outlined),
-                  selectedIcon: Icon(Icons.account_box_rounded),
-                  label: Text('First'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.translate),
-                  selectedIcon: Icon(Icons.translate_sharp),
-                  label: Text('Second'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.library_books_outlined),
-                  selectedIcon: Icon(Icons.library_books_rounded),
-                  label: Text('Third'),
-                ),
-              ],
-            ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedIndex,
+        onTap: (value){
+          setState(() {
+            selectedIndex = value;
+          });
+        },
+        elevation: 20,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home),
+              label: "Home",
+              backgroundColor: Colors.blue
           ),
 
-
-          Expanded(
-              child: Navigator(
-                onGenerateRoute: (settings) {
-                  return MaterialPageRoute(builder: (context) => _getScreenForIndex(_selectedIndex),
-                  );
-                },
-              )
+          BottomNavigationBarItem(
+              icon: Icon(Icons.library_books_outlined),
+              activeIcon: Icon(Icons.library_books),
+              label: "Library",
+              backgroundColor: Colors.blue
           ),
+
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings_outlined),
+              activeIcon: Icon(Icons.settings),
+              label: "Settings",
+              backgroundColor: Colors.blue
+          )
         ],
       ),
     );
   }
-
-  Widget _getScreenForIndex(int index) {
-    switch (index) {
-      case 0:
-        return const Profile();
-      case 1:
-        return const SearchVideo();
-      case 2:
-        return const Library();
-      default:
-        return const TabOne();
-    }
-  }
-
 }
-
-
-class TabOne extends StatefulWidget {
-  const TabOne({super.key});
-
-  @override
-  State<TabOne> createState() => _TabOneState();
-}
-
-class _TabOneState extends State<TabOne> {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Contenido de la pestaña 1'),
-    );
-  }
-}
-
