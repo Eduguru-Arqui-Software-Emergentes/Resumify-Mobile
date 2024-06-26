@@ -54,10 +54,12 @@ class AuthService{
         var responseBody = json.decode(response.body);
         var token = responseBody['token'];
         var responseUsername = responseBody['userName'];
+        var responseUserId = responseBody['userId'];
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', token);
         await prefs.setString('userName', responseUsername);
+        await prefs.setString('userId', responseUserId.toString());
       } else if (response.statusCode == 401) {
         return Future.error('Invalid Credentials');
       } else {
@@ -71,5 +73,7 @@ class AuthService{
   static Future<void> logOut() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
+    await prefs.remove('userName');
+    await prefs.remove('userId');
   }
 }

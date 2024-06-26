@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:resumify_mobile/presentation/screens/auth_screen.dart';
 import 'package:resumify_mobile/presentation/views/edit_password_view.dart';
+import 'package:resumify_mobile/services/auth_service.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -86,6 +88,23 @@ class _Profile extends State<ProfileView> {
                   textStyle: const TextStyle(fontSize: 16),
                 ),
                 child: const Text('Editar Contraseña'),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AuthScreen()),
+                  );
+                  AuthService.logOut();
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(250, 40),
+                  backgroundColor: const Color.fromRGBO(77, 148, 255, 100),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  textStyle: const TextStyle(fontSize: 16),
+                ),
+                child: const Text('Cerrar Sesión'),
               ),
             ],
           ),
