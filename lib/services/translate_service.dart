@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:resumify_mobile/models/transcription_model.dart';
+import 'package:resumify_mobile/models/translate_model.dart';
 
-class TranscriptionService{
-  static Future<TranscriptionModel> transcript(String urlVideo) async {
+class TranslateService{
+  static Future<TranslateModel> translate(String text, String lang) async {
 
     try{
-      var url = Uri.parse('http://10.0.2.2:5000/convert');
+      var url = Uri.parse('http://10.0.2.2:5000/translate');
       Map<String, String> headers = {
         "Accept": "application/json",
         "Content-Type": "application/json"
@@ -15,13 +15,14 @@ class TranscriptionService{
           url,
           headers: headers,
           body: jsonEncode({
-            'url': urlVideo
+            'text': text,
+            "language": lang
           })
       );
 
       if (response.statusCode == 200) {
-        TranscriptionModel transcriptionModel = TranscriptionModel.fromJson(json.decode(response.body));
-        return transcriptionModel;
+        TranslateModel translateModel = TranslateModel.fromJson(json.decode(response.body));
+        return translateModel;
 
       } else if (response.statusCode == 401) {
         return Future.error('Invalid Credentials');

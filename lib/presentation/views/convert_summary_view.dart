@@ -7,13 +7,15 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:open_file/open_file.dart';
+import 'package:resumify_mobile/services/summarize_service.dart';
 
 
 class ConvertToSummary extends StatefulWidget {
   final String title;
+  final String message;
   final String thumbnailUrl;
 
-  ConvertToSummary({required this.title, required this.thumbnailUrl});
+  ConvertToSummary({required this.title, required this.message, required this.thumbnailUrl});
 
   @override
   State<ConvertToSummary> createState() => _ConvertToSummaryState();
@@ -21,8 +23,9 @@ class ConvertToSummary extends StatefulWidget {
 
 class _ConvertToSummaryState extends State<ConvertToSummary> {
   final TextEditingController _textEditingController = TextEditingController();
+  String _summaryText = '';
   //final pw.Document pdf = pw.Document();
-  final String content = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem.';
+
 
   Future<Uint8List> loadFont() async {
     final ByteData data = await rootBundle.load('assets/OpenSans-Regular.ttf');
@@ -37,31 +40,46 @@ class _ConvertToSummaryState extends State<ConvertToSummary> {
   }
 
   Future<void> _createPdf(pw.Document pdf) async {
-    final String text = widget.title;
-    final String image = widget.thumbnailUrl;
+    final String title = widget.title;
     final pw.Font customFont = await loadCustomFont();
 
-    // Añadir una página al documento
     pdf.addPage(
-      pw.Page(
+      pw.MultiPage(
+        pageFormat: PdfPageFormat.a4,
+        margin: pw.EdgeInsets.all(32),
         build: (pw.Context context) {
-          return pw.Column(
-            children: [
-              pw.Text(
-                text,
-                style: pw.TextStyle(font: customFont, fontSize: 20.0, fontWeight: pw.FontWeight.bold),
-              ),
-              pw.SizedBox(height: 20),
-              pw.Text(
-                content,
-                style: pw.TextStyle(font: customFont, fontSize: 16.0, fontWeight: pw.FontWeight.bold),
-              ),
-            ],
-          ); // Contenido de la página
+          return [
+                pw.Text(
+                  title,
+                  style: pw.TextStyle(font: customFont, fontSize: 18.0, fontWeight: pw.FontWeight.bold),
+                ),
+                pw.SizedBox(height: 20),
+                pw.Text(
+                  "Transcripción del video",
+                  style: pw.TextStyle(font: customFont, fontSize: 14.0, fontWeight: pw.FontWeight.bold),
+                ),
+                pw.SizedBox(height: 20),
+                pw.Paragraph(
+                  text: widget.message,
+                  style: pw.TextStyle(font: customFont, fontSize: 12.0, fontWeight: pw.FontWeight.normal),
+                ),
+                pw.SizedBox(height: 20),
+                pw.Text(
+                  "Resumen del video",
+                  style: pw.TextStyle(font: customFont, fontSize: 14.0, fontWeight: pw.FontWeight.bold),
+                ),
+                pw.SizedBox(height: 20),
+                pw.Paragraph(
+                  text: _summaryText,
+                  style: pw.TextStyle(font: customFont, fontSize: 12.0, fontWeight: pw.FontWeight.normal),
+                ),
+              ];
         },
       ),
     );
   }
+
+
 
   Future<void> _saveAndDownloadPdf() async {
     final pw.Document pdf = pw.Document();
@@ -82,7 +100,7 @@ class _ConvertToSummaryState extends State<ConvertToSummary> {
     }
 
     final String downloadsPath = downloadsDir.path;
-    final String filePath = '$downloadsPath/example.pdf';
+    final String filePath = '$downloadsPath/${widget.title}.pdf';
 
     // Guardar el PDF en el directorio de descargas
     final File file = File(filePath);
@@ -106,7 +124,7 @@ class _ConvertToSummaryState extends State<ConvertToSummary> {
     final pw.Document pdf = pw.Document();
     await _createPdf(pdf);
 
-    await Printing.sharePdf(bytes: await pdf.save(), filename: 'example.pdf');
+    await Printing.sharePdf(bytes: await pdf.save(), filename: '${widget.title}.pdf');
 
   }
 
@@ -114,7 +132,7 @@ class _ConvertToSummaryState extends State<ConvertToSummary> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Transcript your video", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
+        title: Text("Summarize your video", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
         backgroundColor: Colors.lightBlue,
         automaticallyImplyLeading: true,),
       backgroundColor: Colors.white,
@@ -124,47 +142,94 @@ class _ConvertToSummaryState extends State<ConvertToSummary> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 40),
-              Text(
-                '${widget.title}',
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.network(widget.thumbnailUrl, width: double.infinity, height: 200, fit: BoxFit.cover),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              widget.title,
+                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        )
+                    )
+                ),
               ),
-              const SizedBox(height: 20),
-              Image.network('${widget.thumbnailUrl}'),
               const SizedBox(height: 20),
               const Text(
                 'Resumen del Video',
                 style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.start,
               ),
               const SizedBox(height: 20),
-              Container(
-                width: 300,
-                padding: const EdgeInsets.all(10),
-                color: const Color.fromRGBO(229, 229, 229, 100),
-                child: Text(
-                  content,
-                  style: const TextStyle(fontSize: 16),
-                ),
+
+              FutureBuilder(
+                  future: SummarizeService.summarize(widget.message),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        final summaryText = snapshot.data!;
+                        _summaryText = summaryText.summary ?? 'No se pudo transcribir el video';
+                        return Container(
+                          padding: const EdgeInsets.all(10),
+                          color: const Color.fromRGBO(229, 229, 229, 100),
+                          child: Column(
+                            children: [
+                              Text(
+                                _summaryText,
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    }
+                  }
               ),
+
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _saveAndDownloadPdf,
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(250, 40),
-                  backgroundColor: const Color.fromRGBO(77, 148, 255, 100),
-                ),
-                child: const Text('Descargar PDF'),
-              ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _sharePdf,
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(250, 40),
-                  backgroundColor: const Color.fromRGBO(77, 148, 255, 100),
-                ),
-                child: const Text('Compartir PDF'),
+              Row(
+                children: [
+                  Expanded(
+                    child:
+                    ElevatedButton(
+                      onPressed: _saveAndDownloadPdf,
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(250, 40),
+                        backgroundColor: Colors.blue,
+                      ),
+                      child: const Text('Descargar PDF', style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: ElevatedButton(
+                        onPressed: _sharePdf,
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(250, 40),
+                          backgroundColor: Colors.blue,
+                        ),
+                        child: const Text('Compartir PDF', style: TextStyle(color: Colors.white),)
+                    ),
+                  )
+                ],
               ),
             ],
           ),

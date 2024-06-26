@@ -27,14 +27,32 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
-    //final screens = [const PlantsView(), const CalendarView(), const IdentificationView(), const SpecialistView(), const SettingsView()];
-    final List<Widget> screens = [SearchVideo(), LibraryView(), ProfileView()];
+    final screens = [SearchVideo(), LibraryView(), ProfileView()];
+    /*final List<Widget> screens = [
+      Navigator(
+        onGenerateRoute: (routeSettings) {
+          return MaterialPageRoute(
+            builder: (context) => SearchVideo(),
+          );
+        },
+      ),
+      Navigator(
+        onGenerateRoute: (routeSettings) {
+          return MaterialPageRoute(
+            builder: (context) => LibraryView(),
+          );
+        },
+      ),
+      Navigator(
+        onGenerateRoute: (routeSettings) {
+          return MaterialPageRoute(
+            builder: (context) => ProfileView(),
+          );
+        },
+      ),
+    ];*/
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Resumify, your assistant", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
-        backgroundColor: Colors.lightBlue,
-        automaticallyImplyLeading: false,),
       backgroundColor: const Color.fromRGBO(40, 40, 40, 1.0),
       body: SafeArea(
         child: IndexedStack(

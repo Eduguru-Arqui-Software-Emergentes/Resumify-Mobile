@@ -70,37 +70,51 @@ class _YouTubeVideoDetailsState extends State<YouTubeVideoDetails> {
       future: _videoDetails,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center( child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
           final videoDetails = snapshot.data!;
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                videoDetails['title']!,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+                'Detalles de video de youtube:',
+                style: const TextStyle(fontSize: 16),
               ),
-              const SizedBox(height: 20),
-              Image.network(videoDetails['thumbnailUrl']!),
-              const SizedBox(height: 20),
-              if (videoDetails['title'] != 'VIDEO NO ENCONTRADO')
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ConvertToText(urlVideo: videoUrl, title: videoDetails['title']!, thumbnailUrl: videoDetails['thumbnailUrl']!),
-                      ),);
-
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(250, 40),
-                    backgroundColor: const Color.fromRGBO(77, 148, 255, 100),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
-                  child: const Text('Convertir a Texto'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(videoDetails['thumbnailUrl']!, width: double.infinity, height: 200, fit: BoxFit.cover),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          videoDetails['title']!,
+                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    )
+                  )
                 ),
+              ),
+
+              if (videoDetails['title'] != 'VIDEO NO ENCONTRADO')
+                Column(
+                  children: [
+                    ConvertToText(urlVideo: videoUrl, title: videoDetails['title']!, thumbnailUrl: videoDetails['thumbnailUrl']!),
+                  ],
+                )
             ],
           );
         }
@@ -128,15 +142,15 @@ class _SearchVideoState extends State<SearchVideo> {
         backgroundColor: Colors.lightBlue,
         automaticallyImplyLeading: true,),
       backgroundColor: Colors.white,
-      body: Center(
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Enlace de video de Youtube :            ',
+                  'Enlace de video de Youtube :',
                   style: TextStyle(fontSize: 16),
                   textAlign: TextAlign.start,
                 ),
@@ -149,16 +163,22 @@ class _SearchVideoState extends State<SearchVideo> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _videoURL = _controller.text;
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(250, 40),
-                      backgroundColor: const Color.fromRGBO(77, 148, 255, 100)),
-                  child: const Text('Buscar video'),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _videoURL = _controller.text;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(250, 40),
+                            backgroundColor: Colors.lightBlue),
+                        child: const Text('Transcribir video', style: TextStyle(color: Colors.white)),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
                 if (_videoURL.isNotEmpty)
@@ -166,7 +186,6 @@ class _SearchVideoState extends State<SearchVideo> {
               ],
             ),
           ),
-        ),
       ),
     );
   }
